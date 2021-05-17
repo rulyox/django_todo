@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Django ToDo</title>
+
+    <link rel="shortcut icon" href="{% static 'todo/image/favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'todo/style/index.css' %}">
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.js"></script>
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+
+</head>
+
+<body>
+
+    <div class="title">
+        <img class="title__logo" src="{% static 'todo/image/logo.png' %}" alt="logo">
+        <div class="title__text">Django ToDo</div>
+    </div>
+
+    <form class="box input-box" action="{% url 'todo:add' %}" method="post">
+        <label for="input-text" class="form-label">Add New Task</label>
+        <input type="text" id="input-text" class="form-control" name="text" placeholder="Enter text here...">
+        <button type="submit" class="btn btn-primary input__button"><i class="fas fa-plus"></i></button>
+    </form>
+
+    {% for task in task_list %}
+
+        <div class="box">
+
+            <div class="task__row">
+                <div class="task__time">{{ task.time }}</div>
+            </div>
+
+            <div class="task__row">
+
+                <form id="form-done-{{ task.pk }}" action="{% url 'todo:done-by-id' task.pk %}" method="post">
+                    {% if task.done %}
+                        <input type="checkbox" class="form-check-input" checked
+                               onclick="document.getElementById('form-done-{{ task.pk }}').submit();">
+                    {% else %}
+                        <input type="checkbox" class="form-check-input"
+                               onclick="document.getElementById('form-done-{{ task.pk }}').submit();">
+                    {% endif %}
+                </form>
+
+                <div class="task__text">{{ task.text }}</div>
+
+            </div>
+
+            <div class="task__row task__control">
+
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-{{ task.pk }}"><i class="fas fa-pen"></i></button>
+
+                <!-- modal -->
+                <div class="modal fade" id="modal-{{ task.pk }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form action="{% url 'todo:update-by-id' task.pk %}" method="post">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+                                </div>
+
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" name="text" placeholder="Enter text here..." value="{{ task.text }}">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-sm btn-success">Edit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-space"></div>
+
+                <form action="{% url 'todo:delete-by-id' task.pk %}" method="post">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="vertical-space"></div>
+
+    {% endfor %}
+
+</body>
+
+</html>

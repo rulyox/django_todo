@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 50px 0;
+    background: #FAFAFA;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin-bottom: 50px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title__logo {
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+
+    user-select: none;
+}
+
+.title__text {
+    font-size: 30px;
+    font-weight: bold;
+
+    user-select: none;
+}
+
+.box {
+    width: 800px;
+    padding: 20px;
+
+    border: 1px solid #B0B0B0;
+    border-radius: 10px;
+}
+
+.horizontal-space {
+    width: 10px;
+}
+
+.vertical-space {
+    height: 10px;
+}
+
+.input-box {
+    margin-bottom: 50px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.input__button {
+    margin-top: 10px;
+
+    align-self: flex-end;
+}
+
+.task__row {
+    margin: 3px 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.task__text {
+    margin-left: 10px;
+}
+
+.task__time {
+    font-size: 13px;
+    color: #B0B0B0;
+}
+
+.task__control {
+    justify-content: flex-end;
+}
